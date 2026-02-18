@@ -1,0 +1,14 @@
+[
+    {
+        "query": "What is the refund policy?",
+        "expected_source": "refund_policy_v2.txt"
+    },
+    {
+        "query": "How do I reset my password?",
+        "expected_source": "general_faqs.txt"
+    },
+    {
+        "query": "What should I do if MFA fails?",
+        "expected_source": "security_protocol.txt"
+    }
+]

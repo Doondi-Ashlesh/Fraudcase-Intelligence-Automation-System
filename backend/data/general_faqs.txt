@@ -1,0 +1,10 @@
+
+    Q: How do I reset a password?
+    A: Instruct the customer to click 'Forgot Password' on the login screen. They will receive an email with a secure link valid for 60 minutes.
+    
+    Q: What is the turnaround time for support tickets?
+    A: Standard turnaround is 24-48 business hours. Priority customers receive a response within 4 hours.
+    
+    Q: How do I escalate to Compliance?
+    A: For all legal or data privacy concerns, use the 'Escalate to Compliance' button in the CRM. This is required for GDPR requests.
+    

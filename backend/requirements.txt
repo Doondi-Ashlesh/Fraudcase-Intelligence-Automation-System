@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+faiss-cpu
+sentence-transformers
+langchain
+langchain-community
+langchain-huggingface
+python-multipart
+python-jose[cryptography]
+passlib[bcrypt]
+requests
+numpy
+PyPDF2
+python-dotenv

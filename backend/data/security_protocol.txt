@@ -1,0 +1,1 @@
+Agents should never ask customers for their full password. Multi-factor authentication (MFA) is required for all account changes. If a customer loses access to their MFA device, escalate to Tier 2 Support.
