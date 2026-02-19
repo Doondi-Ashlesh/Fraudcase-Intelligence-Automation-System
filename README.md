@@ -1,4 +1,4 @@
-# Fraudcase Intelligence – Knowledge Automation System
+# Fraudcase Intelligence – AI Assisted Automation System
 
 ## Overview
 
