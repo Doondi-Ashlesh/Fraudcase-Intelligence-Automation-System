@@ -169,4 +169,4 @@ As financial institutions increasingly adopt AI-driven solutions, intelligent kn
 
 Fraudcase Intelligence demonstrates how generative AI and retrieval systems can be responsibly applied to fraud operations, enabling structured decision support while maintaining transparency and document grounding.
 
-This project serves as a practical, real-world application of AI in knowledge automation within the financial services domain.
+This project serves as a practical, real-world application of AI in knowledge automation within the financial service domain.
