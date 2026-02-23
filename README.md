@@ -2,7 +2,7 @@
 
 ## Overview
 
-Fraudcase Intelligence is an AI-powered knowledge automation system designed to help customer care and fraud investigation teams retrieve accurate information quickly and efficiently.
+Fraudcase Intelligence System is an AI-powered knowledge automation system designed to help customer care and fraud investigation teams retrieve accurate information quickly and efficiently.
 
 Financial institutions and fintech platforms process a large volume of fraud-related cases daily. Support agents must navigate internal documentation, compliance policies, investigation workflows, and historical case logs. Traditional keyword search across static knowledge bases is often slow and imprecise.
 
