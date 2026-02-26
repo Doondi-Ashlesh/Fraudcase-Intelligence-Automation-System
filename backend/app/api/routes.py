@@ -1,7 +1,9 @@
 from fastapi import APIRouter, HTTPException, Depends
-from app.models.schemas import QueryRequest, QueryResponse, FeedbackRequest
+from app.models.schemas import QueryRequest, QueryResponse, FeedbackRequest, FraudReport, VerificationResult
 from app.services.retrieval_service import retrieval_service
 from app.services.llm_service import llm_service
+from app.services.verification_service import verification_service
+from app.services.action_service import action_service
 from app.db.feedback_db import save_feedback
 
 router = APIRouter()
@@ -28,6 +30,23 @@ async def query_endpoint(request: QueryRequest):
         sources=sources,
         confidence=retrieval_result["top_score"]
     )
+
+@router.post("/verify", response_model=VerificationResult)
+async def verify_fraud_endpoint(report: FraudReport):
+    """
+    Triggers the Fraud Verification Workflow for a specific report.
+    """
+    try:
+        # Step 1 & 2: Verify against transactions and SOPs
+        result = await verification_service.verify_report(report)
+        
+        # Step 3: Execute actions if verified
+        if result.status == "Verified":
+            action_service.execute_and_log(result)
+            
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Verification Workflow Failed: {str(e)}")
 
 @router.post("/feedback")
 async def feedback_endpoint(request: FeedbackRequest):

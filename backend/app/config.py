@@ -23,6 +23,9 @@ class Settings(BaseSettings):
     DATA_PATH: str = os.path.join(BASE_DIR, "data")
     EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
     
+    # Transaction Datasets
+    TRANSACTIONS_DATA_PATH: str = os.path.join(BASE_DIR, "data", "transactions.json")
+    
     # DB Settings
     DATABASE_URL: str = f"sqlite:///{os.path.join(BASE_DIR, 'app', 'db', 'feedback.db')}"
     
@@ -30,5 +33,6 @@ class Settings(BaseSettings):
     SECRET_KEY: str = os.getenv("SECRET_KEY", "your-secret-key-here")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    LOG_LEVEL: str = "INFO"
 
 settings = Settings()

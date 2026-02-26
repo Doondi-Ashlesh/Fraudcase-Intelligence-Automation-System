@@ -6,6 +6,35 @@ class DocumentChunk(BaseModel):
     content: str
     metadata: Dict[str, Any]
 
+class Transaction(BaseModel):
+    transaction_id: str
+    account_id: str
+    amount: float
+    currency: str = "USD"
+    timestamp: str
+    merchant: str
+    category: str
+    ip_address: str
+    device_id: str
+    geo_location: str
+    is_flagged: bool = False
+
+class FraudReport(BaseModel):
+    report_id: str
+    account_id: str
+    reason: str
+    reported_by: str  # "User", "Agent", or "System"
+    timestamp: str
+
+class VerificationResult(BaseModel):
+    report_id: str
+    account_id: str
+    status: str  # "Verified", "Safe", "Escalated"
+    matching_sop: str
+    flagged_transactions: List[Transaction]
+    actions_taken: List[str]
+    confidence_score: float
+
 class QueryRequest(BaseModel):
     query: str
     role: Optional[str] = "Tier 1 Agent"

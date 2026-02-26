@@ -1,0 +1,46 @@
+[
+    {
+        "transaction_id": "tx_001",
+        "account_id": "acc_001",
+        "amount": 45.5,
+        "timestamp": "2024-05-20T10:00:00Z",
+        "merchant": "Starbucks",
+        "category": "Food & Drink",
+        "ip_address": "192.168.1.5",
+        "device_id": "dev_mac_789",
+        "geo_location": "New York, USA"
+    },
+    {
+        "transaction_id": "tx_002",
+        "account_id": "acc_001",
+        "amount": 2500.0,
+        "timestamp": "2024-05-20T10:05:00Z",
+        "merchant": "CryptoExchange",
+        "category": "Finance",
+        "ip_address": "45.72.11.90",
+        "device_id": "dev_linux_unknown",
+        "geo_location": "Lagos, Nigeria"
+    },
+    {
+        "transaction_id": "tx_003",
+        "account_id": "acc_002",
+        "amount": 9500.0,
+        "timestamp": "2024-05-21T09:00:00Z",
+        "merchant": "CashDeposit",
+        "category": "Transfer",
+        "ip_address": "10.0.0.1",
+        "device_id": "dev_mobile_123",
+        "geo_location": "London, UK"
+    },
+    {
+        "transaction_id": "tx_004",
+        "account_id": "acc_002",
+        "amount": 9500.0,
+        "timestamp": "2024-05-21T09:15:00Z",
+        "merchant": "CashDeposit",
+        "category": "Transfer",
+        "ip_address": "10.0.0.1",
+        "device_id": "dev_mobile_122",
+        "geo_location": "London, UK"
+    }
+]
