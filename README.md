@@ -1,172 +1,127 @@
-# Fraudcase Intelligence – AI Assisted Automation System
+# FraudSight AI – Intelligent Fraud Intelligence Automation
 
-## Overview
+**FraudSight AI** is a state-of-the-art, **Reasoning-based Vectorless Architecture** designed to empower fraud investigation teams with instant, context-aware access to Standard Operating Procedures (SOPs) and real-time transaction intelligence.
 
-Fraudcase Intelligence System is an AI-powered knowledge automation system designed to help customer care and fraud investigation teams retrieve accurate information quickly and efficiently.
-
-Financial institutions and fintech platforms process a large volume of fraud-related cases daily. Support agents must navigate internal documentation, compliance policies, investigation workflows, and historical case logs. Traditional keyword search across static knowledge bases is often slow and imprecise.
-
-This project introduces a semantic, AI-assisted knowledge retrieval system that improves resolution speed, consistency, and operational efficiency. It demonstrates how modern language models and retrieval techniques can be applied to real-world fraud support environments using cost-free infrastructure.
+Unlike traditional RAG systems that rely on complex vector embeddings, FraudSight AI utilizes an **LLM-driven Reasoning Engine** to dynamically route queries to the most relevant internal protocols, ensuring high precision and full explainability.
 
 ---
 
-## Problem Statement
+## 🚀 Key Features
 
-Fraud support teams face several operational challenges:
+### 🧠 Neural Intelligence Hub (Reasoning Retriever)
+- **Vectorless Retrieval**: Avoids the "black box" of embeddings by using the LLM to reason about document relevance based on semantic intent and SOP metadata.
+- **Dynamic Context Injection**: Automatically selects and injects the full relevant SOP into the LLM's context window for grounded response generation.
+- **Explainable Routing**: Every retrieval decision is rooted in a logical match between the query and the SOP's defined scope.
 
-- Knowledge is distributed across multiple documents and systems
-- Keyword-based search returns irrelevant or incomplete results
-- Agents spend excessive time searching for the correct policy or procedure
-- Responses vary due to inconsistent interpretation of documentation
+### 🛡️ Autonomous Fraud Verification
+- **Cross-Layer Audit**: Automatically correlates suspicious reports with real-time transaction logs in `transactions.json`.
+- **Pattern Matching**: Identifies complex fraud typologies including:
+    - **Synthetic Identity Fraud (SIF)**
+    - **Account Takeover (ATO)**
+    - **Authorized Push Payment (APP) Scams**
+    - **Card-Not-Present (CNP) Fraud**
+- **Automated Response**: Triggers immediate defensive actions (Session Revocation, MFA Reset, Account Freeze) based on verified findings.
 
-These inefficiencies increase case handling time and reduce overall productivity.
-
-Fraudcase Intelligence aims to centralize and intelligently surface relevant knowledge to support faster, more accurate fraud case resolution.
-
----
-
-## Project Objective
-
-The primary objective of this project is to build a prototype AI-driven knowledge management system that:
-
-- Enables contextual, semantic search over fraud-related documents
-- Retrieves relevant internal policies and procedures
-- Generates structured, grounded responses for agents
-- Reduces manual document lookup
-- Demonstrates practical application of Retrieval-Augmented Generation (RAG)
-
-The system is designed as a high-quality portfolio project that operates within free-tier infrastructure constraints.
+### 📈 Active Feedback Loop
+- **Continuous Learning**: Support agents can rate intelligence packets, providing a structured dataset for future engine fine-tuning.
+- **Audit Logging**: Every verification and retrieval action is logged for compliance and post-mortem analysis.
 
 ---
 
-## Core Concept
+## 🏗️ System Architecture
 
-Instead of relying solely on keyword matching, the system uses semantic understanding to interpret queries.
-
-When a support agent submits a fraud-related query, the system:
-
-1. Understands the intent of the query
-2. Retrieves the most relevant knowledge snippets using semantic similarity
-3. Generates a concise, contextual response grounded in retrieved data
-4. Provides references to the source material
-
-This ensures responses remain explainable and policy-aligned.
-
----
-
-## Primary Use Case
-
-### Fraud Case Handling in Financial Services
-
-Scenario:
-
-A customer contacts support claiming unauthorized debit card transactions.
-
-The agent enters a natural language query into the system such as:
-
-> "Customer reports two unauthorized debit card transactions. What steps should I follow?"
-
-The system:
-
-- Identifies this as a card fraud dispute scenario
-- Retrieves relevant internal policies and resolution workflows
-- Summarizes required verification and escalation steps
-- Displays references to supporting documentation
-
-This enables the agent to respond quickly and consistently without manually searching through multiple documents.
+```mermaid
+graph TD
+    User((Support Agent)) -->|Query/Report| Frontend[React / Vite / Tailwind]
+    Frontend -->|API Request| FastAPI[FastAPI Backend]
+    
+    subgraph Reasoning_Engine [LLM Reasoning Engine]
+        FastAPI -->|Extract Intent| Router[LLM Router]
+        Router -->|Scan Metadata| KB_Index[Knowledge Base Index]
+        KB_Index -->|Select Document| KB_Data[(SOP Data/)]
+        KB_Data -->|Full Context| Generator[LLM Generator]
+    end
+    
+    Generator -->|Intelligence Packet| Frontend
+    
+    subgraph Verification_Workflow [Fraud Verification Workflow]
+        FastAPI -->|Audit Request| VS[Verification Service]
+        VS -->|Scan History| TD[(Transactions DB)]
+        VS -->|Cross-Ref| KB_Data
+        VS -->|Action| AS[Action Service]
+    end
+```
 
 ---
 
-## Additional Use Cases
+## 💻 Tech Stack
 
-- Internal fraud policy lookup
-- Regulatory compliance guidance
-- Historical fraud scenario reference
-- New agent onboarding support
-- Knowledge base consolidation
-- Structured case resolution assistance
-
----
-
-## Scope of the Project
-
-### In Scope
-
-- AI-based semantic document retrieval
-- Knowledge ingestion and indexing
-- Natural language query processing
-- Retrieval-Augmented response generation
-- Simple agent-facing interface
-- Cost-free deployment strategy
-
-### Out of Scope (Initial Version)
-
-- Enterprise-grade authentication and RBAC
-- Full production scaling
-- Real-time banking system integrations
-- Live fraud detection models
-- Multi-tenant architecture
-
-The focus is on building a strong, well-structured prototype rather than a full enterprise deployment.
+- **Frontend**: React 18, Vite, Tailwind CSS, Lucide React (Cyber-Security Theme).
+- **Backend**: FastAPI, LangChain (for LLM orchestration).
+- **Storage**: Vectorless (Direct File System) + SQLite (for feedback/audit logs).
+- **LLM Support**: 
+    - **Ollama**: Local execution (Llama 3).
+    - **HuggingFace**: Inference API support.
+    - **Mock Mode**: For offline development and testing.
 
 ---
 
-## Key Concepts Applied
+## 🛠️ Setup & Installation
 
-- Knowledge Management Systems (KMS)
-- Natural Language Processing (NLP)
-- Semantic Search
-- Embedding-based Retrieval
-- Retrieval-Augmented Generation (RAG)
-- AI-assisted Decision Support Systems
+### Prerequisites
+- Python 3.9+
+- Node.js 18+
+- (Optional) [Ollama](https://ollama.ai/) for local LLM execution.
 
----
+### Backend Setup
+1. Navigate to the `backend` directory.
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Configure your environment in `app/config.py` or a `.env` file (e.g., `LLM_MODE=Mock`).
+4. Run the server:
+   ```bash
+   python -m uvicorn app.main:app --reload
+   ```
 
-## High-Level Workflow
-
-1. Knowledge documents are ingested and processed.
-2. Documents are indexed for semantic retrieval.
-3. An agent submits a natural language query.
-4. Relevant knowledge chunks are retrieved.
-5. A contextual response is generated.
-6. The agent reviews and applies the guidance.
-
----
-
-## Expected Impact
-
-- Reduced average fraud case resolution time
-- Improved response consistency
-- Lower cognitive load for support agents
-- Increased operational efficiency
-- Better utilization of internal knowledge assets
-
----
-
-## Target Users
-
-- Fraud investigation teams
-- Customer support agents
-- Risk and compliance teams
-- Operations managers
+### Frontend Setup
+1. Navigate to the `frontend` directory.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the dev server:
+   ```bash
+   npm run dev
+   ```
 
 ---
 
-## Future Enhancements
+## 📖 Usage Guide
 
-- Agent feedback loop for continuous improvement
-- Confidence scoring for responses
-- Query analytics dashboard
-- CRM system integration
-- Multi-language support
-- Fraud pattern intelligence layer
+1. **Ingest Data**: While the system is vectorless, you can validate the knowledge base by running:
+   ```bash
+   python scripts/run_ingestion.py
+   ```
+2. **Launch Dashboard**: Open your browser to the local Vite port.
+3. **Simulate Fraud**: Use the **Command Center** to select a live threat or the **Intelligence Hub** to query specific protocols.
+4. **Run Simulations**: Test the end-to-end flow with:
+   ```bash
+   python scripts/simulate_fraud.py
+   ```
 
 ---
 
-## Why This Project Matters
+## 📁 Knowledge Base Structure
 
-As financial institutions increasingly adopt AI-driven solutions, intelligent knowledge systems are becoming essential to operational efficiency.
+The system is pre-populated with high-fidelity fraud SOPs in `backend/data/`:
+- `TECH_SYNTH_012.md`: Synthetic Identity Fraud protocols.
+- `SO_ATO_001.md`: Account Takeover mitigation steps.
+- `APP_SCAM_008.md`: Authorized Push Payment scam workflows.
+- `CNP_FRAUD_005.md`: Card-Not-Present detection strategies.
 
-Fraudcase Intelligence demonstrates how generative AI and retrieval systems can be responsibly applied to fraud operations, enabling structured decision support while maintaining transparency and document grounding.
+---
 
-This project serves as a practical, real-world application of AI in knowledge automation within the financial service domain.
+## ⚖️ License
+Proprietary Intelligence System – All Rights Reserved.

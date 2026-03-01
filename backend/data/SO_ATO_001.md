@@ -1,14 +1,21 @@
-# SOP-FIN-001: Account Takeover (ATO) Investigation Protocol
+# SOP: Account Takeover (ATO)
+**CODE**: SO_ATO_001
+**CATEGORY**: Account Security / Unauthorized Access
 
-## 1. Overview
-Account Takeover occurs when a malicious actor gains unauthorized access to a customer's account credentials to perform fraudulent transactions or data exfiltration.
+## Overview
+ATO occurs when a fraudster gains unauthorized access to a customer's account, usually via credential stuffing, phishing, or SIM swapping.
 
-## 2. Detection Signals
-- **Device Fingerprint Mismatch**: Drastic change in OS, browser, or hardware ID.
-- **Velocity Anomalies**: Multiple login attempts from diverse geolocations within < 1 hour (Impossible Travel).
-- **Sensitive Change Trigger**: Modification of MFA settings, email address, or payout methods followed by immediate large withdrawal.
+## Detection Signals
+- **Login Anomaly**: Successful login from a new device/location previously unseen.
+- **PII Change**: Immediate change of email, phone number, or password followed by a transfer request.
+- **Security Bypass**: Sudden disablement of MFA or multiple failed MFA attempts.
+- **Session Hijacking**: Change in browser fingerprint mid-session.
 
-## 3. Mandatory Steps
-1. **Immediate Lockdown**: Freeze all debit/credit activity and API keys for the UID.
-2. **Session Termination**: Revoke all active OAuth tokens and web sessions.
-3. **MFA Reset**: Reset MFA seeds and require hardware-token re-verification for Tier 2 restoration.
+## Investigation Workflow
+1. **Login Audit**: Review IP reputation and ISP consistency.
+2. **Contact Change History**: Verify if the recent PII changes were authorized via secondary channels.
+3. **Transaction Linkage**: Detect if newly added beneficiaries are linked to known mule accounts.
+
+## Resolution Actions
+- **Confirmed ATO**: Immediate session termination, account lockdown, and mandatory password/MFA reset.
+- **Suspicious Activity**: Step-up authentication (Bio-ID or physical token) required.

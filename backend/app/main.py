@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api import routes
 from app.db.feedback_db import init_db
-from app.services.vector_store_service import vector_store
 from app.config import settings
 
 app = FastAPI(title=settings.PROJECT_NAME)
@@ -20,8 +19,6 @@ app.add_middleware(
 async def startup_event():
     # Initialize DB
     init_db()
-    # Load vector store if it exists
-    vector_store.load()
 
 app.include_router(routes.router, prefix=settings.API_V1_STR)
 

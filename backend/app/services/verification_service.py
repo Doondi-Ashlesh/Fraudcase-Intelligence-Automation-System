@@ -30,11 +30,10 @@ class VerificationService:
         transactions = transaction_service.get_transactions_by_account(report.account_id)
         
         # 2. RAG: Retrieve the most relevant SOP for the reason
-        # e.g., if reason="Possible ATO", find ATO SOP
         retrieval_result = retrieval_service.retrieve(report.reason)
-        matching_sop = retrieval_result["chunks"][0]["chunk"].metadata["source"] if retrieval_result["chunks"] else "Uknown SOP"
+        matching_sop = retrieval_result["chunks"][0]["chunk"].metadata["source"] if retrieval_result["chunks"] else "Unknown SOP"
         
-        # 3. Rule-based Pattern Matching (Simulation)
+        # 3. Simple Pattern Matching (Simulation)
         flagged = []
         status = "Safe"
         actions = []
@@ -42,23 +41,18 @@ class VerificationService:
         analysis_steps = [f"Initial audit of {len(transactions)} transactions complete."]
 
         for tx in transactions:
-            if "ATO" in report.reason.upper():
-                # Logic: Check for geo-mismatch or high amount combined with unknown device
-                if tx.geo_location != "New York, USA" and tx.amount > 1000:
-                    tx.is_flagged = True
-                    flagged.append(tx)
-                    status = "Verified"
-                    actions = ["Freeze Account", "Revoke Web Sessions", "MFA Reset Required"]
-                    analysis_steps.append(f"CRITICAL: Transaction {tx.transaction_id} flagged for Geo-Inconsistency ({tx.geo_location}) and High Velocity (${tx.amount}).")
-            
-            elif "AML" in report.reason.upper() or "STRUCTURING" in report.reason.upper():
-                # Logic: Check for high frequency deposits just below thresholds
-                if tx.amount >= 9000 and tx.merchant == "CashDeposit":
-                    tx.is_flagged = True
-                    flagged.append(tx)
-                    status = "Verified"
-                    actions = ["Flag for SAR Filing", "Compliance Review"]
-                    analysis_steps.append(f"WARNING: Potential Structuring detected in transaction {tx.transaction_id} (${tx.amount} Cash Deposit).")
+            # Logic: If any transaction is from an anomalous location or high amount
+            if tx.amount > 5000 or (tx.geo_location != "New York, USA" and tx.amount > 1000):
+                tx.is_flagged = True
+                flagged.append(tx)
+                status = "Verified"
+                actions = ["Freeze Account", "Enhanced Identity Verification"]
+                analysis_steps.append(f"CRITICAL: Transaction {tx.transaction_id} flagged for anomaly ({tx.geo_location}) at ${tx.amount}.")
+
+        if not flagged:
+            analysis_steps.append("No immediate anomalies matching current SOP thresholds were detected.")
+        else:
+            analysis_steps.append(f"Automated verification complete. {len(flagged)} anomalies confirmed via {matching_sop}.")
 
         if not flagged:
             analysis_steps.append("No immediate anomalies matching current SOP thresholds were detected across the transaction history.")
