@@ -26,6 +26,13 @@ class FraudReport(BaseModel):
     reported_by: str  # "User", "Agent", or "System"
     timestamp: str
 
+class FraudEvent(BaseModel):
+    event: str
+    case_id: str
+    customer_id: str
+    priority: str
+    timestamp: str
+
 class VerificationResult(BaseModel):
     report_id: str
     account_id: str
@@ -34,6 +41,7 @@ class VerificationResult(BaseModel):
     flagged_transactions: List[Transaction]
     actions_taken: List[str]
     confidence_score: float
+    analysis: str
 
 class QueryRequest(BaseModel):
     query: str

@@ -27,4 +27,4 @@ app.include_router(routes.router, prefix=settings.API_V1_STR)
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to SupportIQ API", "version": "1.0.0"}
+    return {"message": "Welcome to FraudSight AI API", "version": "1.0.0"}

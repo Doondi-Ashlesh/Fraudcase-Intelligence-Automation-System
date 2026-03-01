@@ -8,7 +8,7 @@ load_dotenv()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "SupportIQ"
+    PROJECT_NAME: str = "FraudSight AI"
     API_V1_STR: str = "/api/v1"
     
     # LLM Settings

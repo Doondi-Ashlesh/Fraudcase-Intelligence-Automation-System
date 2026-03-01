@@ -1,5 +1,9 @@
 import os
-import requests
+import sys
+
+# Add backend to path
+sys.path.append(os.path.join(os.getcwd(), "backend"))
+
 from app.services.ingestion_service import ingestion_service
 
 def trigger_ingestion():

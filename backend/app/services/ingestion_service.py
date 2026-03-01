@@ -21,9 +21,9 @@ class IngestionService:
         all_chunks = []
         for filename in os.listdir(self.data_path):
             file_path = os.path.join(self.data_path, filename)
-            if filename.endswith(".txt"):
+            if filename.endswith(".txt") or filename.endswith(".md"):
                 text = self._read_txt(file_path)
-                chunks = get_text_chunks(text, source=filename, doc_type="txt")
+                chunks = get_text_chunks(text, source=filename, doc_type="txt" if filename.endswith(".txt") else "md")
                 all_chunks.extend(chunks)
             elif filename.endswith(".pdf"):
                 text = self._read_pdf(file_path)

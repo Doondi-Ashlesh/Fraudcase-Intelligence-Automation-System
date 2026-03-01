@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
-from app.models.schemas import QueryRequest, QueryResponse, FeedbackRequest, FraudReport, VerificationResult
+from app.models.schemas import QueryRequest, QueryResponse, FeedbackRequest, FraudReport, VerificationResult, FraudEvent
 from app.services.retrieval_service import retrieval_service
 from app.services.llm_service import llm_service
 from app.services.verification_service import verification_service
@@ -31,8 +31,10 @@ async def query_endpoint(request: QueryRequest):
         confidence=retrieval_result["top_score"]
     )
 
+from typing import Union
+
 @router.post("/verify", response_model=VerificationResult)
-async def verify_fraud_endpoint(report: FraudReport):
+async def verify_fraud_endpoint(report: Union[FraudReport, FraudEvent]):
     """
     Triggers the Fraud Verification Workflow for a specific report.
     """
