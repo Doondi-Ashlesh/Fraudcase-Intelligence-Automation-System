@@ -6,14 +6,14 @@ Unlike traditional RAG systems that rely on complex vector embeddings, FraudSigh
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
-### 🧠 Neural Intelligence Hub (Reasoning Retriever)
+###  Neural Intelligence Hub (Reasoning Retriever)
 - **Vectorless Retrieval**: Avoids the "black box" of embeddings by using the LLM to reason about document relevance based on semantic intent and SOP metadata.
 - **Dynamic Context Injection**: Automatically selects and injects the full relevant SOP into the LLM's context window for grounded response generation.
 - **Explainable Routing**: Every retrieval decision is rooted in a logical match between the query and the SOP's defined scope.
 
-### 🛡️ Autonomous Fraud Verification
+###  Autonomous Fraud Verification
 - **Cross-Layer Audit**: Automatically correlates suspicious reports with real-time transaction logs in `transactions.json`.
 - **Pattern Matching**: Identifies complex fraud typologies including:
     - **Synthetic Identity Fraud (SIF)**
@@ -28,7 +28,7 @@ Unlike traditional RAG systems that rely on complex vector embeddings, FraudSigh
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 ```mermaid
 graph TD
@@ -54,7 +54,7 @@ graph TD
 
 ---
 
-## 💻 Tech Stack
+##  Tech Stack
 
 - **Frontend**: React 18, Vite, Tailwind CSS, Lucide React (Cyber-Security Theme).
 - **Backend**: FastAPI, LangChain (for LLM orchestration).
@@ -66,7 +66,7 @@ graph TD
 
 ---
 
-## 🛠️ Setup & Installation
+##  Setup & Installation
 
 ### Prerequisites
 - Python 3.9+
@@ -98,7 +98,7 @@ graph TD
 
 ---
 
-## 📖 Usage Guide
+## Usage Guide
 
 1. **Ingest Data**: While the system is vectorless, you can validate the knowledge base by running:
    ```bash
@@ -113,7 +113,7 @@ graph TD
 
 ---
 
-## 📁 Knowledge Base Structure
+## Knowledge Base Structure
 
 The system is pre-populated with high-fidelity fraud SOPs in `backend/data/`:
 - `TECH_SYNTH_012.md`: Synthetic Identity Fraud protocols.
@@ -123,5 +123,4 @@ The system is pre-populated with high-fidelity fraud SOPs in `backend/data/`:
 
 ---
 
-## ⚖️ License
-Proprietary Intelligence System – All Rights Reserved.
+
