@@ -1,4 +1,4 @@
-# FraudSight AI: Intelligent Fraud Intelligence Automation System 
+# FraudSight AI: Fraud Intelligence Automation System 
 
 **FraudSight AI** is a high-performance fraud detection and investigation platform. It leverages a **Neural Reasoning Architecture** to automate the analysis of complex fraud typologies, combining real-time database audits with intelligent SOP (Standard Operating Procedure) matching.
 
