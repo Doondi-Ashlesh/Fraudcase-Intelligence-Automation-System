@@ -1,27 +1,39 @@
-import requests
 import json
+import requests
+from groq import Groq
 from app.config import settings
 
 class LLMService:
     def __init__(self):
         self.mode = settings.LLM_MODE
+        self.groq_client = Groq(api_key=settings.GROQ_API_KEY) if settings.GROQ_API_KEY else None
         self.prompt_template = """
-You are a customer support assistant.
-Use ONLY the provided context to answer the question.
-If the answer is not in the context, say: "I do not have enough information."
+You are a Senior Fraud Intelligence Analyst.
+Your goal is to provide high-fidelity intelligence briefings based ONLY on the provided context.
 
-Context:
+GUIDELINES:
+- Provide a detailed and technical explanation.
+- Use markdown headers (#) for sections.
+- If the answer is not in the context, state: "I do not have enough information."
+
+CONTEXT:
 {context}
 
-Question:
+QUERY:
 {query}
 
-Answer:"""
+INTELLIGENCE BRIEFING:"""
 
     def generate_answer(self, context: str, query: str) -> str:
-        prompt = self.prompt_template.format(context=context, query=query)
+        # If context and query are already formatted into a single prompt (like in verification_service)
+        if "You are a senior fraud investigator" in context:
+            prompt = context
+        else:
+            prompt = self.prompt_template.format(context=context, query=query)
         
-        if self.mode == "Ollama":
+        if self.mode == "Groq":
+            return self._generate_groq(prompt)
+        elif self.mode == "Ollama":
             return self._generate_ollama(prompt)
         elif self.mode == "HuggingFace":
             return self._generate_huggingface(prompt)
@@ -29,30 +41,53 @@ Answer:"""
             return self._generate_mock(context, query)
 
     def _generate_mock(self, context: str, query: str) -> str:
-        if not context.strip():
-            return "I do not have enough information."
+        # Check if this is a routing request from RetrievalService
+        if "Select the best SOP filename" in query:
+            context_upper = context.upper()
+            mappings = {
+                "SYNTHETIC": "TECH_SYNTH_012.md",
+                "ACCOUNT TAKEOVER": "SO_ATO_001.md",
+                "ATO": "SO_ATO_001.md",
+                "APP SCAM": "APP_SCAM_008.md",
+                "PUSH PAYMENT": "APP_SCAM_008.md",
+                "CARD-NOT-PRESENT": "CNP_FRAUD_005.md",
+                "CNP": "CNP_FRAUD_005.md"
+            }
+            for key, val in mappings.items():
+                if key in context_upper:
+                    return val
+            return "NONE"
+
+        return f"MOCK RESPONSE for query: {query}. (Context length: {len(context)})"
+    def generate_structured_json(self, prompt: str) -> str:
+        """
+        Force the LLM to return a JSON object.
+        """
+        if self.mode == "Groq":
+            return self._generate_groq(prompt, json_mode=True)
+        else:
+            # Fallback for Ollama/HF
+            return self.generate_answer(prompt, "Respond in RAW JSON format only.")
+
+    def _generate_groq(self, prompt: str, json_mode: bool = False) -> str:
+        if not self.groq_client:
+            return "Error: Groq API key not found. Please set GROQ_API_KEY in your .env file."
         
-        # Extract title or first line for context
-        title = context.split('\n')[0].replace('#', '').strip()
-        
-        return f"""### NEURAL INTELLIGENCE BRIEFING
-**SUBJECT**: {query.upper()}
-**SOURCE PROTOCOL**: {title}
+        try:
+            kwargs = {
+                "messages": [{"role": "user", "content": prompt}],
+                "model": settings.GROQ_MODEL,
+            }
+            if json_mode:
+                kwargs["response_format"] = {"type": "json_object"}
+            
+            chat_completion = self.groq_client.chat.completions.create(**kwargs)
+            return chat_completion.choices[0].message.content
+        except Exception as e:
+            return f"Error connecting to Groq: {str(e)}"
 
-#### EXECUTIVE SUMMARY
-Based on a neural audit of internal fraud schematics and standard operating procedures (SOPs), we have identified patterns relevant to your query. The system has successfully cross-referenced the active case parameters against decentralized knowledge nodes.
-
-#### KEY FINDINGS
-- **Pattern Match**: High correlation with protocol '{title}'.
-- **Structural Integrity**: The retrieval contains specific metrics for detection including behavioral velocity and entity linkage.
-- **Contextual Depth**: {context[:300]}... [RESTRICTED ACCESS TO FULL PACKET]
-
-#### RECOMMENDED ACTIONS
-1. Execute immediate transaction audit for associated entities.
-2. Cross-reference IP clusters with known exit nodes.
-3. Apply standard protocol mitigations as defined in {title}.
-"""
     def _generate_ollama(self, prompt: str) -> str:
+        import requests
         url = f"{settings.OLLAMA_BASE_URL}/api/generate"
         payload = {
             "model": settings.OLLAMA_MODEL,

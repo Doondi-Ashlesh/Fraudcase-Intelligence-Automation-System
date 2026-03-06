@@ -1,0 +1,7 @@
+{
+    "report_id": "RE-CNP-552-L99",
+    "account_id": "acc_5607ae13",
+    "reason": "Three sequential transactions of $1.00 observed (card testing) followed by a $1,200 purchase for high-end electronics from an IP address in a high-risk jurisdiction.",
+    "reported_by": "System",
+    "timestamp": "2026-03-05T22:45:00Z"
+}

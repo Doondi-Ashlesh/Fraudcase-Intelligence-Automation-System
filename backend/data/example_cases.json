@@ -1,0 +1,16 @@
+[
+    {
+        "report_id": "RE-BATCH-001",
+        "account_id": "acc_001",
+        "reason": "Suspected Unauthorized Push Payment (APP Scam)",
+        "reported_by": "System",
+        "timestamp": "2026-03-05T20:00:00Z"
+    },
+    {
+        "report_id": "RE-BATCH-002",
+        "account_id": "acc_002",
+        "reason": "Large wire transfer following account takeover indicators",
+        "reported_by": "Agent",
+        "timestamp": "2026-03-05T21:15:00Z"
+    }
+]

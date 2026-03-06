@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api import routes
-from app.db.feedback_db import init_db
+from app.db.feedback_db import init_db as init_feedback_db
+from app.db.database import init_db as init_main_db
 from app.config import settings
 
 app = FastAPI(title=settings.PROJECT_NAME)
@@ -17,8 +18,12 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup_event():
-    # Initialize DB
-    init_db()
+    # Initialize DBs
+    init_feedback_db()
+    try:
+        init_main_db()
+    except Exception as e:
+        print(f"WARNING: Main Database (PostgreSQL) initialization failed: {e}")
 
 app.include_router(routes.router, prefix=settings.API_V1_STR)
 

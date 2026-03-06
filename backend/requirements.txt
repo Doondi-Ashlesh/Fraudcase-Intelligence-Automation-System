@@ -14,3 +14,4 @@ requests
 numpy
 PyPDF2
 python-dotenv
+groq

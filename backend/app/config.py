@@ -11,8 +11,14 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "FraudSight AI"
     API_V1_STR: str = "/api/v1"
     
-    # LLM Settings
-    LLM_MODE: str = os.getenv("LLM_MODE", "Mock") # Ollama, HuggingFace, or Mock
+    # Database Settings
+    POSTGRES_URL: str = os.getenv("POSTGRES_URL", "postgresql://postgres:postgres@localhost:5432/fraudsight")
+    LLM_MODE: str = os.getenv("LLM_MODE", "Groq") # Groq, Ollama, HuggingFace, or Mock
+    
+    # Groq Settings
+    GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
+    GROQ_MODEL: str = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
+    
     OLLAMA_BASE_URL: str = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
     OLLAMA_MODEL: str = os.getenv("OLLAMA_MODEL", "llama3")
     HF_API_KEY: str = os.getenv("HF_API_KEY", "")

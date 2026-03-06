@@ -1,0 +1,7 @@
+{
+    "report_id": "RE-SIF-773-M50",
+    "account_id": "acc_670e4923",
+    "reason": "Identity consistency check failed. Social security footprint is non-existent for an adult profile, and credit building has been unnaturally rapid with multiple high-limit requests shortly after account opening.",
+    "reported_by": "System",
+    "timestamp": "2026-03-05T22:50:00Z"
+}

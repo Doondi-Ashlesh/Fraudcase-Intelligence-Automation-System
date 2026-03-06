@@ -1,0 +1,7 @@
+{
+    "report_id": "FR-NT-2024-X99",
+    "account_id": "acc_5607ae13",
+    "reason": "Sudden change in device ID followed by a $2,500 outgoing wire transfer to an unverified recipient.",
+    "reported_by": "System",
+    "timestamp": "2026-03-05T22:20:00Z"
+}

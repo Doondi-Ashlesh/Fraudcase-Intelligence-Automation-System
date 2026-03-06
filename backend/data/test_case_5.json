@@ -1,0 +1,7 @@
+{
+    "report_id": "RE-AML-005-STRU",
+    "account_id": "acc_3127cc97",
+    "reason": "Four sequential cash deposits of $2,900 made at different branch locations within a 4-hour window, totaling $11,600. Potential structuring to evade CTR reporting requirements.",
+    "reported_by": "System",
+    "timestamp": "2026-03-05T22:55:00Z"
+}
