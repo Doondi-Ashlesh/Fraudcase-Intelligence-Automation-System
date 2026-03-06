@@ -1,126 +1,115 @@
-# FraudSight AI – Intelligent Fraud Intelligence Automation
+# FraudSight AI: Intelligent Fraud Intelligence Automation System 🛡️⚡
 
-**FraudSight AI** is a state-of-the-art, **Reasoning-based Vectorless Architecture** designed to empower fraud investigation teams with instant, context-aware access to Standard Operating Procedures (SOPs) and real-time transaction intelligence.
+**FraudSight AI** is a premium, high-performance fraud detection and investigation platform. It leverages a **Neural Reasoning Architecture** to automate the analysis of complex fraud typologies, combining real-time database audits with intelligent SOP (Standard Operating Procedure) matching.
 
-Unlike traditional RAG systems that rely on complex vector embeddings, FraudSight AI utilizes an **LLM-driven Reasoning Engine** to dynamically route queries to the most relevant internal protocols, ensuring high precision and full explainability.
-
----
-
-##  Key Features
-
-###  Neural Intelligence Hub (Reasoning Retriever)
-- **Vectorless Retrieval**: Avoids the "black box" of embeddings by using the LLM to reason about document relevance based on semantic intent and SOP metadata.
-- **Dynamic Context Injection**: Automatically selects and injects the full relevant SOP into the LLM's context window for grounded response generation.
-- **Explainable Routing**: Every retrieval decision is rooted in a logical match between the query and the SOP's defined scope.
-
-###  Autonomous Fraud Verification
-- **Cross-Layer Audit**: Automatically correlates suspicious reports with real-time transaction logs in `transactions.json`.
-- **Pattern Matching**: Identifies complex fraud typologies including:
-    - **Synthetic Identity Fraud (SIF)**
-    - **Account Takeover (ATO)**
-    - **Authorized Push Payment (APP) Scams**
-    - **Card-Not-Present (CNP) Fraud**
-- **Automated Response**: Triggers immediate defensive actions (Session Revocation, MFA Reset, Account Freeze) based on verified findings.
-
-### 📈 Active Feedback Loop
-- **Continuous Learning**: Support agents can rate intelligence packets, providing a structured dataset for future engine fine-tuning.
-- **Audit Logging**: Every verification and retrieval action is logged for compliance and post-mortem analysis.
+Built for modern cybersecurity teams, it replaces traditional "black box" detection with an explainable, LLM-driven verification engine that provides deep forensic insights into every decision.
 
 ---
 
-##  System Architecture
+## System Architecture
 
-```mermaid
-graph TD
-    User((Support Agent)) -->|Query/Report| Frontend[React / Vite / Tailwind]
-    Frontend -->|API Request| FastAPI[FastAPI Backend]
-    
-    subgraph Reasoning_Engine [LLM Reasoning Engine]
-        FastAPI -->|Extract Intent| Router[LLM Router]
-        Router -->|Scan Metadata| KB_Index[Knowledge Base Index]
-        KB_Index -->|Select Document| KB_Data[(SOP Data/)]
-        KB_Data -->|Full Context| Generator[LLM Generator]
-    end
-    
-    Generator -->|Intelligence Packet| Frontend
-    
-    subgraph Verification_Workflow [Fraud Verification Workflow]
-        FastAPI -->|Audit Request| VS[Verification Service]
-        VS -->|Scan History| TD[(Transactions DB)]
-        VS -->|Cross-Ref| KB_Data
-        VS -->|Action| AS[Action Service]
-    end
-```
+### Pre-configured Reasoning Engine (Vectorless RAG)
+Unlike traditional search systems, FraudSight uses a **Vectorless Architecture**:
+- **Semantic Routing**: The LLM analyzes query intent to dynamically select the most relevant SOP from the `backend/data/` library.
+- **Contextual Injection**: The selected protocol is injected into a specialized reasoning window alongside live customer and transaction data.
+- **Logic-Based Decisioning**: Every result includes a "Confidence Score" and a "Logical Analysis" rooted in actual internal protocols.
+
+### Core Infrastructure
+- **Backend**: FastAPI (Python 3.12) with Pydantic v2 validation.
+- **Frontend**: React 18 + Vite with a Premium "Cyber-Security" Glassmorphism UI.
+- **Large Language Model**: **Groq Cloud** (Llama 3.1 8B Instant) for ultra-fast, hardware-accelerated reasoning (<500ms latency).
+- **Storage**: 
+  - **PostgreSQL**: Primary relational store for Incidents, Customers, and Transactions.
+  - **SQLite**: Local audit store for support agent feedback and engine calibration.
 
 ---
 
-##  Tech Stack
+## Intelligent Flow
+1. **Trigger**: A fraud report is submitted (via UI or JSON API).
+2. **Retrieve**: The system scans the Knowledge Base (Markdown/JSON SOPs) to find the matching protocol.
+3. **Audit**: The **Verification Service** queries PostgreSQL for the customer's historical profile and recent transaction velocity.
+4. **Reason**: The LLM compares the live data against the SOP detection signals.
+5. **Act**: The system executes defensive measures (e.g., specific transaction flagging or account lock) and generates a detailed briefing.
 
-- **Frontend**: React 18, Vite, Tailwind CSS, Lucide React (Cyber-Security Theme).
-- **Backend**: FastAPI, LangChain (for LLM orchestration).
-- **Storage**: Vectorless (Direct File System) + SQLite (for feedback/audit logs).
-- **LLM Support**: 
-    - **Ollama**: Local execution (Llama 3).
-    - **HuggingFace**: Inference API support.
-    - **Mock Mode**: For offline development and testing.
+---
+## Key Functionalities
+
+### 1. Intelligence Hub (Neural Search)
+- Query any internal SOP or regulation in natural language.
+- Receive grounded answers with direct citations to source documents.
+- Automatic feedback loop for continuous engine improvement.
+
+### 2. Forensic Dashboard (Command Center)
+- Real-time monitoring of live incidents.
+- Interactive investigation cards with automated AI verification.
+- **One-Click Actions**: Execute security protocols directly from the UI.
+
+### 3. Batch Verification Engine
+- Command-line tool for high-volume audit processing.
+- Input: JSON files containing fraud reports.
+- Output: Full forensic analysis and risk classification.
 
 ---
 
-##  Setup & Installation
+## Build & Installation
 
 ### Prerequisites
-- Python 3.9+
+- Python 3.12+
 - Node.js 18+
-- (Optional) [Ollama](https://ollama.ai/) for local LLM execution.
+- Docker (for PostgreSQL)
 
-### Backend Setup
-1. Navigate to the `backend` directory.
+### Step 1: Backend Setup
+1. Inside `/backend`, create a `.env` file from `.env.example`:
+   ```bash
+   GROQ_API_KEY=your_key_here
+   DATABASE_URL=postgresql://postgres:postgres@localhost:5432/fraudsight
+   ```
 2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-3. Configure your environment in `app/config.py` or a `.env` file (e.g., `LLM_MODE=Mock`).
+3. Initialize the database:
+   ```bash
+   python scripts/check_db.py
+   ```
 4. Run the server:
    ```bash
    python -m uvicorn app.main:app --reload
    ```
 
-### Frontend Setup
-1. Navigate to the `frontend` directory.
+### Step 2: Frontend Setup
+1. Navigate to `/frontend`.
 2. Install dependencies:
    ```bash
    npm install
    ```
-3. Start the dev server:
+3. Start the application:
    ```bash
    npm run dev
    ```
 
 ---
 
-## Usage Guide
+## Run Demo (Batch Testing)
 
-1. **Ingest Data**: While the system is vectorless, you can validate the knowledge base by running:
-   ```bash
-   python scripts/run_ingestion.py
-   ```
-2. **Launch Dashboard**: Open your browser to the local Vite port.
-3. **Simulate Fraud**: Use the **Command Center** to select a live threat or the **Intelligence Hub** to query specific protocols.
-4. **Run Simulations**: Test the end-to-end flow with:
-   ```bash
-   python scripts/simulate_fraud.py
-   ```
+To see the Neural Engine in action without using the UI, you can run a batch verification for any JSON case file:
+
+```powershell
+# From the project root
+python scripts/batch_verify.py backend/data/test_case_4.json
+```
 
 ---
 
-## Knowledge Base Structure
-
-The system is pre-populated with high-fidelity fraud SOPs in `backend/data/`:
-- `TECH_SYNTH_012.md`: Synthetic Identity Fraud protocols.
-- `SO_ATO_001.md`: Account Takeover mitigation steps.
-- `APP_SCAM_008.md`: Authorized Push Payment scam workflows.
-- `CNP_FRAUD_005.md`: Card-Not-Present detection strategies.
+## Knowledge Base
+The system includes high-fidelity SOPs for:
+- `SO_ATO_001.md`: **Account Takeover**
+- `APP_SCAM_008.md`: **Authorized Push Payment Scams**
+- `CNP_FRAUD_005.md`: **Card-Not-Present Fraud**
+- `TECH_SYNTH_012.md`: **Synthetic Identity Fraud**
+- `COMP_AML_004.md`: **AML & Regulatory Reporting**
 
 ---
 
-
+## License
+Proprietary Cybersecurity Intelligence System – All Rights Reserved.
